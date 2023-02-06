@@ -28,19 +28,19 @@ class User
     /**
      * @ORM\Column(type="string", length="100", nullable=false)
      */
-    private string $firstName,
+    private readonly string $firstName,
     /**
      * @ORM\Column(type="string", length="100", nullable=false)
      */
-    private string $middleName,
+    private readonly string $middleName,
     /**
      * @ORM\Column(type="string", length="100", nullable=false)
      */
-    private string $lastName,
+    private readonly string $lastName,
     /**
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
      */
-    private int $age,
+    private readonly int $age,
     /**
      * @ORM\Column(type="string", length="10", enumType="\App\Type\UserType", nullable=false)
      */

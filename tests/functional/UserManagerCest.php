@@ -30,16 +30,15 @@ class UserManagerCest
 
     public function testFindUser(FunctionalTester $I): void
     {
-        $userParams = [
-            'firstName' => 'Name',
-            'middleName' => 'Patronymic',
-            'lastName' => 'Surname',
-            'age' => 34,
-            'userType' => UserType::student,
-            'userStatus' => UserStatus::suspended,
-        ];
+        $expectedUser = new User(
+            'Name',
+            'Patronymic',
+            'Surname',
+            34,
+            UserType::student,
+        );
         /** @var User $actualUser */
-        $actualUserId = $I->haveInRepository(User::class, $userParams);
+        $actualUserId = $I->haveInRepository($expectedUser, ['userStatus' => UserStatus::suspended]);
         /** @var UserManager $userManager */
         $userManager = $I->grabService(UserManager::class);
 
@@ -47,7 +46,14 @@ class UserManagerCest
         $actualUser = $userManager->findUser($actualUserId);
 
         $I->assertEquals(
-            $userParams,
+            [
+                'firstName' => $expectedUser->getFirstName(),
+                'middleName' => $expectedUser->getMiddleName(),
+                'lastName' => $expectedUser->getLastName(),
+                'age' => $expectedUser->getAge(),
+                'userType' => $expectedUser->getUserType(),
+                'userStatus' => $expectedUser->getUserStatus(),
+            ],
             [
                 'firstName' => $actualUser->getFirstName(),
                 'middleName' => $actualUser->getMiddleName(),
@@ -64,15 +70,15 @@ class UserManagerCest
      */
     public function testDeactivateUser(FunctionalTester $I, Example $example): void
     {
-        $userParams = [
-            'firstName' => 'Name',
-            'middleName' => 'Patronymic',
-            'lastName' => 'Surname',
-            'age' => 34,
-            'userType' => $example['userType'],
-            'userStatus' => UserStatus::active,
-        ];
-        $userId = $I->haveInRepository(User::class, $userParams);
+        $user = new User(
+            'Name',
+            'Patronymic',
+            'Surname',
+            34,
+            $example['userType'],
+        );
+        /** @var User $actualUser */
+        $userId = $I->haveInRepository($user, ['userStatus' => UserStatus::active]);
         /** @var User $user */
         $user = $I->grabEntityFromRepository(User::class, ['id' => $userId]);
 
@@ -89,15 +95,15 @@ class UserManagerCest
      */
     public function testChangeUserType(FunctionalTester $I, Example $example): void
     {
-        $userParams = [
-            'firstName' => 'Name',
-            'middleName' => 'Patronymic',
-            'lastName' => 'Surname',
-            'age' => 34,
-            'userType' => $example['initialUserType'],
-            'userStatus' => $example['initialUserStatus'],
-        ];
-        $userId = $I->haveInRepository(User::class, $userParams);
+        $user = new User(
+            'Name',
+            'Patronymic',
+            'Surname',
+            34,
+            $example['initialUserType'],
+        );
+        /** @var User $actualUser */
+        $userId = $I->haveInRepository($user, ['userStatus' => $example['initialUserStatus']]);
         /** @var User $user */
         $user = $I->grabEntityFromRepository(User::class, ['id' => $userId]);
 
