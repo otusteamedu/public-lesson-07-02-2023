@@ -9,11 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserManager
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     public function saveUser(User $user): ?int
@@ -31,10 +28,10 @@ class UserManager
 
     public function deactivateUser(User $user): void
     {
-        if ($user->getUserType()->equals(UserType::employee())) {
-            $user->setUserStatus(UserStatus::suspended());
+        if ($user->getUserType()->equals(\App\Type\UserType::employee)) {
+            $user->setUserStatus(\App\Type\UserStatus::suspended);
         } else {
-            $user->setUserStatus(UserStatus::disabled());
+            $user->setUserStatus(\App\Type\UserStatus::disabled);
         }
 
         $this->entityManager->flush();
@@ -43,10 +40,10 @@ class UserManager
     public function changeUserType(User $user, UserType $userType): void
     {
         $user->setUserType($userType);
-        if ($userType->equals(UserType::employee()) && $user->getUserStatus()->equals(UserStatus::disabled())) {
-            $user->setUserStatus(UserStatus::suspended());
-        } elseif (!$userType->equals(UserType::employee()) && $user->getUserStatus()->equals(UserStatus::suspended())) {
-            $user->setUserStatus(UserStatus::disabled());
+        if ($userType->equals(\App\Type\UserType::employee) && $user->getUserStatus()->equals(\App\Type\UserStatus::disabled)) {
+            $user->setUserStatus(\App\Type\UserStatus::suspended);
+        } elseif (!$userType->equals(\App\Type\UserType::employee) && $user->getUserStatus()->equals(\App\Type\UserStatus::suspended)) {
+            $user->setUserStatus(\App\Type\UserStatus::disabled);
         }
 
         $this->entityManager->flush();

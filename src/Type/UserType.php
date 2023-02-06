@@ -4,16 +4,9 @@ namespace App\Type;
 
 use MyCLabs\Enum\Enum;
 
-/**
- * @method static self teacher()
- * @method static self student()
- * @method static self employee()
- */
-final class UserType extends Enum
+enum UserType : string
 {
-    public const teacher = 'teacher';
-
-    public const student = 'student';
-
-    public const employee = 'employee';
+    case teacher = 'teacher';
+    case student = 'student';
+    case employee = 'employee';
 }

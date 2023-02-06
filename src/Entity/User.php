@@ -20,43 +20,28 @@ class User
     private ?int $id = null;
 
     /**
-     * @ORM\Column(type="string", length="100", nullable=false)
-     */
-    private string $firstName;
-
-    /**
-     * @ORM\Column(type="string", length="100", nullable=false)
-     */
-    private string $middleName;
-
-    /**
-     * @ORM\Column(type="string", length="100", nullable=false)
-     */
-    private string $lastName;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
-     */
-    private int $age;
-
-    /**
-     * @ORM\Column(type="user_type", length="10", nullable=false)
-     */
-    private UserType $userType;
-
-    /**
      * @ORM\Column(type="user_status", length="10", nullable=false)
      */
     private UserStatus $userStatus;
 
-    public function __construct(string $firstName, string $middleName, string $lastName, string $age, UserType $userType)
+    public function __construct(/**
+     * @ORM\Column(type="string", length="100", nullable=false)
+     */
+    private string $firstName, /**
+     * @ORM\Column(type="string", length="100", nullable=false)
+     */
+    private string $middleName, /**
+     * @ORM\Column(type="string", length="100", nullable=false)
+     */
+    private string $lastName, /**
+     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
+     */
+    private int $age, /**
+     * @ORM\Column(type="user_type", length="10", nullable=false)
+     */
+    private UserType $userType)
     {
-        $this->firstName = $firstName;
-        $this->middleName = $middleName;
-        $this->lastName = $lastName;
-        $this->age = $age;
-        $this->userType = $userType;
-        $this->userStatus = UserStatus::active();
+        $this->userStatus = \App\Type\UserStatus::active;
     }
 
     public function getId(): ?int
