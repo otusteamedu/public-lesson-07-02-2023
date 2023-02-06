@@ -28,10 +28,10 @@ class UserManager
 
     public function deactivateUser(User $user): void
     {
-        if ($user->getUserType()->equals(\App\Type\UserType::employee)) {
-            $user->setUserStatus(\App\Type\UserStatus::suspended);
+        if ($user->getUserType() === UserType::employee) {
+            $user->setUserStatus(UserStatus::suspended);
         } else {
-            $user->setUserStatus(\App\Type\UserStatus::disabled);
+            $user->setUserStatus(UserStatus::disabled);
         }
 
         $this->entityManager->flush();
@@ -40,10 +40,10 @@ class UserManager
     public function changeUserType(User $user, UserType $userType): void
     {
         $user->setUserType($userType);
-        if ($userType->equals(\App\Type\UserType::employee) && $user->getUserStatus()->equals(\App\Type\UserStatus::disabled)) {
-            $user->setUserStatus(\App\Type\UserStatus::suspended);
-        } elseif (!$userType->equals(\App\Type\UserType::employee) && $user->getUserStatus()->equals(\App\Type\UserStatus::suspended)) {
-            $user->setUserStatus(\App\Type\UserStatus::disabled);
+        if ($userType === UserType::employee && $user->getUserStatus() === UserStatus::disabled) {
+            $user->setUserStatus(UserStatus::suspended);
+        } elseif ($userType !== UserType::employee && $user->getUserStatus() === UserStatus::suspended) {
+            $user->setUserStatus(UserStatus::disabled);
         }
 
         $this->entityManager->flush();

@@ -16,7 +16,7 @@ class UserManagerCest
             'Patronymic',
             'Surname',
             12,
-            UserType::student()
+            UserType::student
         );
         /** @var UserManager $userManager */
         $userManager = $I->grabService(UserManager::class);
@@ -24,7 +24,7 @@ class UserManagerCest
 
         $I->canSeeInRepository(User::class, [
             'id' => $userId,
-            'userStatus' => UserStatus::active()
+            'userStatus' => UserStatus::active
         ]);
     }
 
@@ -35,8 +35,8 @@ class UserManagerCest
             'middleName' => 'Patronymic',
             'lastName' => 'Surname',
             'age' => 34,
-            'userType' => UserType::student(),
-            'userStatus' => UserStatus::suspended(),
+            'userType' => UserType::student,
+            'userStatus' => UserStatus::suspended,
         ];
         /** @var User $actualUser */
         $actualUserId = $I->haveInRepository(User::class, $userParams);
@@ -70,7 +70,7 @@ class UserManagerCest
             'lastName' => 'Surname',
             'age' => 34,
             'userType' => $example['userType'],
-            'userStatus' => UserStatus::active(),
+            'userStatus' => UserStatus::active,
         ];
         $userId = $I->haveInRepository(User::class, $userParams);
         /** @var User $user */
@@ -115,27 +115,27 @@ class UserManagerCest
     protected function userTypesDataProvider(): array
     {
         return [
-            ['userType' => UserType::student(), 'userStatus' => UserStatus::disabled()],
-            ['userType' => UserType::teacher(), 'userStatus' => UserStatus::disabled()],
-            ['userType' => UserType::employee(), 'userStatus' => UserStatus::suspended()],
+            ['userType' => UserType::student, 'userStatus' => UserStatus::disabled],
+            ['userType' => UserType::teacher, 'userStatus' => UserStatus::disabled],
+            ['userType' => UserType::employee, 'userStatus' => UserStatus::suspended],
         ];
     }
 
     protected function userStatusDataProvider(): array
     {
         return [
-            ['initialUserType' => UserType::student(), 'initialUserStatus' => UserStatus::active(), 'targetUserType' => UserType::teacher(), 'expectedUserStatus' => UserStatus::active()],
-            ['initialUserType' => UserType::student(), 'initialUserStatus' => UserStatus::active(), 'targetUserType' => UserType::employee(), 'expectedUserStatus' => UserStatus::active()],
-            ['initialUserType' => UserType::student(), 'initialUserStatus' => UserStatus::disabled(), 'targetUserType' => UserType::teacher(), 'expectedUserStatus' => UserStatus::disabled()],
-            ['initialUserType' => UserType::student(), 'initialUserStatus' => UserStatus::disabled(), 'targetUserType' => UserType::employee(), 'expectedUserStatus' => UserStatus::suspended()],
-            ['initialUserType' => UserType::teacher(), 'initialUserStatus' => UserStatus::active(), 'targetUserType' => UserType::student(), 'expectedUserStatus' => UserStatus::active()],
-            ['initialUserType' => UserType::teacher(), 'initialUserStatus' => UserStatus::active(), 'targetUserType' => UserType::employee(), 'expectedUserStatus' => UserStatus::active()],
-            ['initialUserType' => UserType::teacher(), 'initialUserStatus' => UserStatus::disabled(), 'targetUserType' => UserType::student(), 'expectedUserStatus' => UserStatus::disabled()],
-            ['initialUserType' => UserType::teacher(), 'initialUserStatus' => UserStatus::disabled(), 'targetUserType' => UserType::employee(), 'expectedUserStatus' => UserStatus::suspended()],
-            ['initialUserType' => UserType::employee(), 'initialUserStatus' => UserStatus::active(), 'targetUserType' => UserType::student(), 'expectedUserStatus' => UserStatus::active()],
-            ['initialUserType' => UserType::employee(), 'initialUserStatus' => UserStatus::active(), 'targetUserType' => UserType::teacher(), 'expectedUserStatus' => UserStatus::active()],
-            ['initialUserType' => UserType::employee(), 'initialUserStatus' => UserStatus::suspended(), 'targetUserType' => UserType::student(), 'expectedUserStatus' => UserStatus::disabled()],
-            ['initialUserType' => UserType::employee(), 'initialUserStatus' => UserStatus::suspended(), 'targetUserType' => UserType::teacher(), 'expectedUserStatus' => UserStatus::disabled()],
+            ['initialUserType' => UserType::student, 'initialUserStatus' => UserStatus::active, 'targetUserType' => UserType::teacher, 'expectedUserStatus' => UserStatus::active],
+            ['initialUserType' => UserType::student, 'initialUserStatus' => UserStatus::active, 'targetUserType' => UserType::employee, 'expectedUserStatus' => UserStatus::active],
+            ['initialUserType' => UserType::student, 'initialUserStatus' => UserStatus::disabled, 'targetUserType' => UserType::teacher, 'expectedUserStatus' => UserStatus::disabled],
+            ['initialUserType' => UserType::student, 'initialUserStatus' => UserStatus::disabled, 'targetUserType' => UserType::employee, 'expectedUserStatus' => UserStatus::suspended],
+            ['initialUserType' => UserType::teacher, 'initialUserStatus' => UserStatus::active, 'targetUserType' => UserType::student, 'expectedUserStatus' => UserStatus::active],
+            ['initialUserType' => UserType::teacher, 'initialUserStatus' => UserStatus::active, 'targetUserType' => UserType::employee, 'expectedUserStatus' => UserStatus::active],
+            ['initialUserType' => UserType::teacher, 'initialUserStatus' => UserStatus::disabled, 'targetUserType' => UserType::student, 'expectedUserStatus' => UserStatus::disabled],
+            ['initialUserType' => UserType::teacher, 'initialUserStatus' => UserStatus::disabled, 'targetUserType' => UserType::employee, 'expectedUserStatus' => UserStatus::suspended],
+            ['initialUserType' => UserType::employee, 'initialUserStatus' => UserStatus::active, 'targetUserType' => UserType::student, 'expectedUserStatus' => UserStatus::active],
+            ['initialUserType' => UserType::employee, 'initialUserStatus' => UserStatus::active, 'targetUserType' => UserType::teacher, 'expectedUserStatus' => UserStatus::active],
+            ['initialUserType' => UserType::employee, 'initialUserStatus' => UserStatus::suspended, 'targetUserType' => UserType::student, 'expectedUserStatus' => UserStatus::disabled],
+            ['initialUserType' => UserType::employee, 'initialUserStatus' => UserStatus::suspended, 'targetUserType' => UserType::teacher, 'expectedUserStatus' => UserStatus::disabled],
         ];
     }
 }

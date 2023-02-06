@@ -20,24 +20,29 @@ class User
     private ?int $id = null;
 
     /**
-     * @ORM\Column(type="user_status", length="10", nullable=false)
+     * @ORM\Column(type="string", length="10", enumType="\App\Type\UserStatus", nullable=false)
      */
     private UserStatus $userStatus;
 
-    public function __construct(/**
+    public function __construct(
+    /**
      * @ORM\Column(type="string", length="100", nullable=false)
      */
-    private string $firstName, /**
+    private string $firstName,
+    /**
      * @ORM\Column(type="string", length="100", nullable=false)
      */
-    private string $middleName, /**
+    private string $middleName,
+    /**
      * @ORM\Column(type="string", length="100", nullable=false)
      */
-    private string $lastName, /**
+    private string $lastName,
+    /**
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
      */
-    private int $age, /**
-     * @ORM\Column(type="user_type", length="10", nullable=false)
+    private int $age,
+    /**
+     * @ORM\Column(type="string", length="10", enumType="\App\Type\UserType", nullable=false)
      */
     private UserType $userType)
     {
